@@ -127,13 +127,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\AdventOfCode2024Sol\DayOne.cpp" />
     <ClCompile Include="AdventOfCode2024Proj.cpp" />
     <ClCompile Include="AoCFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\AdventOfCode2024Sol\Solutions.h" />
     <ClInclude Include="AoCFunctions.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\AdventOfCode2024Sol\DayOne.txt" />
     <Text Include="Test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

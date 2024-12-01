@@ -1,12 +1,21 @@
 // AdventOfCode2024Proj.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "AoCFunctions.h"
 #include <iostream>
+#include "../AdventOfCode2024Sol/Solutions.h"
 
 int main()
 {
-    testContentsOfFile("Test.txt");
+    int day;
+    std::cout << "Enter challenge day: ";
+    std::cin >> day;
+    switch (day) {
+        case 1:
+            dayOne();
+            break;
+            
+        default: NULL;
+    }
     return 0;
 }
 

@@ -12,6 +12,8 @@ using std::string;
 
 std::vector<string> contentsOfFile(string fileName);
 
+std::vector<int> splitStringIntoInt(string input, string delimiter);
+
 void testContentsOfFile(string fileName);
 
 #endif ADVENT_OF_CODE_FUNCTIONS
