@@ -3,6 +3,7 @@
 #include <iostream>
 
 void dayOne() {
+	// Returns an array of strings representing the lines of the input file
 	vector<string> input = contentsOfFile("DayOne.txt");
 	vector<int> col1, col2;
 	for (int i = 0; i < input.size(); i++) {

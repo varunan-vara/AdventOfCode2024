@@ -13,6 +13,9 @@ int main()
         case 1:
             dayOne();
             break;
+        case 2:
+            dayTwo();
+            break;
             
         default: NULL;
     }

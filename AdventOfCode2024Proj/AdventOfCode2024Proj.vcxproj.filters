@@ -24,6 +24,9 @@
     <ClCompile Include="..\AdventOfCode2024Sol\DayOne.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\AdventOfCode2024Sol\DayTwo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AoCFunctions.h">
@@ -34,9 +37,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Test.txt">
+    <Text Include="..\AdventOfCode2024Sol\DayOne.txt">
       <Filter>Source Files</Filter>
     </Text>
-    <Text Include="..\AdventOfCode2024Sol\DayOne.txt" />
+    <Text Include="..\AdventOfCode2024Sol\DayTwo.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
