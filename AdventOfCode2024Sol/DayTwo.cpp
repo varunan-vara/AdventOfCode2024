@@ -1,11 +1,9 @@
 #include "../AdventOfCode2024Proj/AoCFunctions.h"
-#include <algorithm>
 #include <iostream>
 
 // 1 if safe, 0 if unsafe
 int checkReport(vector<int> report, int numErrors) {
 	vector<int> newReport;
-	// Increasing report
 	for (int i = 1; i < report.size(); i++)
 		if ( // This if case looks for an error, if this statement is never triggered, the function returns 1
 			(report[i] - report[i - 1] < 1 || report[i] - report[i - 1] > 3) && (report[1] > report[0]) || // Increasing Numbers in Report

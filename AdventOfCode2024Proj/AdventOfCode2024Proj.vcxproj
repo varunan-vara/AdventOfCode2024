@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\AdventOfCode2024Sol\DayOne.cpp" />
+    <ClCompile Include="..\AdventOfCode2024Sol\DayThree.cpp" />
     <ClCompile Include="..\AdventOfCode2024Sol\DayTwo.cpp" />
     <ClCompile Include="AdventOfCode2024Proj.cpp" />
     <ClCompile Include="AoCFunctions.cpp" />
@@ -138,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\AdventOfCode2024Sol\DayOne.txt" />
+    <Text Include="..\AdventOfCode2024Sol\DayThree.txt" />
     <Text Include="..\AdventOfCode2024Sol\DayTwo.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

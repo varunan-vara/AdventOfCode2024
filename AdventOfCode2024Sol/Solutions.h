@@ -4,5 +4,6 @@
 
 void dayOne();
 void dayTwo();
+void dayThree();
 
 #endif ADVENT_OF_CODE_SOLUTIONS
