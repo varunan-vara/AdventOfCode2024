@@ -10,7 +10,7 @@ using std::string;
 
 // int sizeOfFile(string fileName);
 
-std::vector<string> contentsOfFile(string fileName);
+std::vector<string> contentsOfInput();
 
 std::vector<int> splitStringIntoInt(string input, string delimiter);
 

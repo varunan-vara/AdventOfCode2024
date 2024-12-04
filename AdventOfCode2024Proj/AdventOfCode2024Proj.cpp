@@ -19,6 +19,9 @@ int main()
         case 3:
             dayThree();
             break;
+        case 4:
+            dayFour();
+            break;
             
         default: NULL;
     }

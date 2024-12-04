@@ -2,7 +2,7 @@
 #include <iostream>
 
 void dayThree() {
-	vector<string> input = contentsOfFile("DayThree.txt");
+	vector<string> input = contentsOfInput();
 
 	int multiplications = 0;
 

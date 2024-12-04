@@ -1,6 +1,5 @@
 #include <string>
 #include <vector>
-#include <fstream>
 #include <iostream>
 using std::string;
 
@@ -9,30 +8,19 @@ Param: fileName (string)
 
 Returns the contents of file as array of strings, each of which is a seperate line. Path is determined from 'AdventOfCode2024Sol' folder
 */
-std::vector<string> contentsOfFile(string fileName) {
-	fileName = "../AdventOfCode2024Sol/" + fileName;
-
+std::vector<string> contentsOfInput() {
 	std::vector<string> returnObj;
-
 	string temp;
-	std::ifstream readFile(fileName);
-	while (std::getline(readFile, temp)) {
+
+	std::cout << "Enter puzzle input: ";
+	std::cin >> temp;
+	while (temp != ".") {
+		std::cout << "----" << temp << std::endl;
 		returnObj.push_back(temp);
+		std::cin >> temp;
 	}
 
 	return returnObj;
-}
-
-/*
-Param: fileName (string)
-
-Runs a test for the contentsOfFile Function
-*/
-void testContentsOfFile(string fileName) {
-	std::vector<string> result = contentsOfFile(fileName);
-	for (int i = 0; i < result.size(); i++) {
-		std::cout << i << " : " << result[i] << std::endl;
-	}
 }
 
 // Copied from https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c

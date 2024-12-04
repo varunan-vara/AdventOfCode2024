@@ -33,7 +33,7 @@ int checkReport(vector<int> report, int numErrors) {
 
 void dayTwo() {
 	// Returns an array of strings representing the lines of the input file
-	vector<string> input = contentsOfFile("DayTwo.txt");
+	vector<string> input = contentsOfInput();
 	vector<vector<int>> reports;
 	vector<int> line;
 	for (int i = 0; i < input.size(); i++) {
