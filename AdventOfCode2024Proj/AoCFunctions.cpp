@@ -11,11 +11,11 @@ Returns the contents of file as array of strings, each of which is a seperate li
 std::vector<string> contentsOfInput() {
 	std::vector<string> returnObj;
 	string temp;
-
-	std::cout << "Enter puzzle input: ";
 	std::cin >> temp;
 	while (temp != ".") {
-		std::cout << "----" << temp << std::endl;
+		if (temp.empty()) {
+			returnObj.push_back(""); continue;
+		}
 		returnObj.push_back(temp);
 		std::cin >> temp;
 	}

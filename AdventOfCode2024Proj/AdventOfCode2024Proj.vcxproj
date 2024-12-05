@@ -133,6 +133,7 @@
     <ClCompile Include="..\AdventOfCode2024Sol\DayTwo.cpp" />
     <ClCompile Include="AdventOfCode2024Proj.cpp" />
     <ClCompile Include="AoCFunctions.cpp" />
+    <ClCompile Include="DayFive.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AdventOfCode2024Sol\Solutions.h" />

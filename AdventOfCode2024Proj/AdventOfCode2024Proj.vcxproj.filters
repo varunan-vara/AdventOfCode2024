@@ -33,6 +33,9 @@
     <ClCompile Include="..\AdventOfCode2024Sol\DayFour.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DayFive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AoCFunctions.h">

@@ -2,6 +2,7 @@
 #include <iostream>
 
 void dayFour() {
+	std::cout << "Enter puzzle input: ";
 	vector<string> input = contentsOfInput();
 
 	int numXMAS = 0;

@@ -4,6 +4,7 @@
 
 void dayOne() {
 	// Returns an array of strings representing the lines of the input file
+	std::cout << "Enter puzzle input: ";
 	vector<string> input = contentsOfInput();
 	vector<int> col1, col2;
 	for (int i = 0; i < input.size(); i++) {

@@ -32,6 +32,7 @@ int checkReport(vector<int> report, int numErrors) {
 }
 
 void dayTwo() {
+	std::cout << "Enter puzzle input: ";
 	// Returns an array of strings representing the lines of the input file
 	vector<string> input = contentsOfInput();
 	vector<vector<int>> reports;
