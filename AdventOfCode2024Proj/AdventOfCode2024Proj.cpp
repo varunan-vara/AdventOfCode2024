@@ -25,6 +25,9 @@ int main()
         case 5:
             dayFive();
             break;
+        case 6:
+            daySix();
+            break;
             
         default: NULL;
     }
