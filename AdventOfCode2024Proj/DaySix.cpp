@@ -82,7 +82,8 @@ void daySix() {
 
 	// Create floorplan and guard
 	vector<vector<int>> floorPlan(input.size(), vector<int>(input[0].size(), 0));
-	Guard* g = new Guard(0,0,NORTH);
+	Guard* g = new Guard(0,0,NORTH); // G2 for Part 2
+	int origx=0, origy=0;
 	for (int i = 0; i < input.size(); i++) {
 		for (int j = 0; j < input[i].size(); j++) {
 			switch (input[i][j]) {
@@ -91,6 +92,7 @@ void daySix() {
 					break;
 				case ('^'):
 					g = new Guard(i,j,NORTH); 
+					origx = i, origy = j;
 					// Continue to next;
 				case ('.'):
 					floorPlan[i][j] = 0;
@@ -126,4 +128,55 @@ void daySix() {
 		for (int i : line)
 			output += i;
 	std::cout << "Part 1: " << output << std::endl;
+
+
+	// For Part 2, going through each possibility makes no sense since only one object can be added, the path has to be broken
+	// on values that have already been visited.
+	// The most efficient way would be to calculate lines at which the security guard travels, where it intersects (even if the guard
+	// hasn't used that part of the line, it can be used to create a loop), then check those.
+	// Alternatively, easier to program, and still more efficient than checking each index, is doing each visited square.
+
+	int i, j, r1; output = 0;
+	vector<vector<int>> floorPlanDuplicate; vector<vector<vector<int>>> travelDir;
+	for (i = 0; i < visited.size(); i++) {
+		for (j = 0; j < visited[i].size(); j++) {
+			if (visited[i][j] == 0) {
+				continue;
+			}
+			std::cout << i << ", " << j << std::endl;
+
+
+			g = new Guard(origx, origy, NORTH);
+			travelDir = vector<vector<vector<int>>>(floorPlan.size(), vector<vector<int>>(floorPlan[0].size(), vector<int>(4, 0)));
+			floorPlanDuplicate = floorPlan;
+			floorPlanDuplicate[i][j] = 1;
+
+			// Move g2 twice, and g once. After the first round, if they are in the same place, then there is a loop
+			
+			while (true) {
+				r1 = g->moveForward(floorPlanDuplicate);
+				if (r1 == 2) {
+					break; // There is no loop
+				}
+				while (r1 == 1) { // if (r2 == 1)
+					g->turnRight();
+					r1 = g->moveForward(floorPlanDuplicate);
+				}
+
+				if (travelDir[g->x][g->y][g->direction] == 1) {
+					output++;
+					break;
+				}
+				else {
+					travelDir[g->x][g->y][g->direction] = 1;
+				}
+				
+			}
+			
+		}
+	}
+
+	std::cout << "Part 2: " << output << std::endl;
+
+	
 }
