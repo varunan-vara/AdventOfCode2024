@@ -2,7 +2,6 @@
 #include <iostream>
 
 void dayThree() {
-	std::cout << "Enter puzzle input: ";
 	vector<string> input = contentsOfInput();
 
 	int multiplications = 0;

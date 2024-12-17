@@ -5,10 +5,11 @@
 
 void dayFive() {
 	// Seperate input for rules and page orders
+	return ; // After refactoring, this doesn't work
 	std::cout << "Enter Rules: \n";
 	vector<string> input = contentsOfInput();
 	int numOne, numTwo;
-	vector<vector<int>> rules;
+	vector< vector<int> > rules;
 
 	// Formulate each input into a rule, ie vector of vectors, where index 0 is lower, 1 is higher
 	for (int i = 0; i < input.size(); i++) {
@@ -46,7 +47,7 @@ void dayFive() {
 		if (i < inConvert.size()) {
 			// Convert to a workable list
 			vector<int> newic(inConvert);
-			vector<vector<int>> newRules(rules);
+			vector< vector<int> > newRules(rules);
 			std::sort(newRules.begin(), newRules.end(), [](vector<int> a, vector<int> b) {
 				return a[0] > b[0];
 				});

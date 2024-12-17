@@ -13,6 +13,7 @@ using std::string;
 std::vector<string> contentsOfInput();
 
 std::vector<int> splitStringIntoInt(string input, string delimiter);
+std::vector<long long> splitStringIntoLongLong(string input, string delimiter);
 
 void testContentsOfFile(string fileName);
 

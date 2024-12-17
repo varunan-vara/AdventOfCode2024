@@ -77,7 +77,6 @@ public:
 };
 
 void daySix() {
-	std::cout << "Enter Puzzle Input, followed by '.' to show the end: \n";
 	vector<string> input = contentsOfInput();
 
 	// Create floorplan and guard

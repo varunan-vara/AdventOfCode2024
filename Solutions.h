@@ -8,5 +8,6 @@ void dayThree();
 void dayFour();
 void dayFive();
 void daySix();
+void daySeven();
 
-#endif ADVENT_OF_CODE_SOLUTIONS
+#endif // ADVENT_OF_CODE_SOLUTIONS
