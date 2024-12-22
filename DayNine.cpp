@@ -42,11 +42,32 @@ void dayNine() {
         markerOne++, markerTwo--;
     }
 
-    // Create two markers for Part Two
-    // markerOne = 0;
-    // markerOne = 0;
-    // markerTwo = disk.size() - 1;
-    // int tempLen, tempSpace, tempID = -1, z;
+    // Part 2:
+    for (int td = diskTwo.size() - 1; td > 0; td --) {
+        if (diskTwo[td] == -1) {
+            continue;
+        }
+        int tempId = diskTwo[td];
+        int tempLen = 1;
+        int tempSpace = 0;
+        for (NULL; diskTwo[td - 1] == tempId; td--) {tempLen++;}
+        
+        for (int bu = 0; bu < td; bu++) {
+            if (diskTwo[bu] != -1) {
+                tempSpace = 0; 
+            } else {
+                tempSpace ++;
+                if (tempSpace == tempLen) {
+                    for (int i = 0; i < tempSpace; i++) {
+                        diskTwo[bu - i] = tempId;
+                        diskTwo[td + i] = -1;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    
 
 
     long long outputOne = 0;
@@ -63,8 +84,4 @@ void dayNine() {
 
     std::cout << "Part 1: " << outputOne << std::endl;
     std::cout << "Part 2: " << outputTwo << std::endl;
-    for (int x : diskTwo) {
-        std::cout << x << ", ";
-    }
-    std::cout << "\n";
 }
