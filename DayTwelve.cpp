@@ -2,53 +2,12 @@
 #include <iostream>
 #include <map>
 
-string getCoordSting(int x, int y) {
-    return (std::to_string(x) + "-" + std::to_string(y));
+string coordStr(int x, int y) {
+    return std::to_string(x) + "-" + std::to_string(y);
 }
 
-int findPerimeter(int x, int y, vector<vector<char>> regionMap) {
-    int result = 0;
-    result += (int) (x > 0 && regionMap[x-1][y] != regionMap[x][y]);
-    result += (int) (x < regionMap.size() - 1 && regionMap[x+1][y] != regionMap[x][y]);
-    result += (int) (y > 0 && regionMap[x][y-1] != regionMap[x][y]);
-    result += (int) (y < regionMap[x].size() - 1 && regionMap[x][y+1] != regionMap[x][y]);
-    return result;
-}
 
-class Region {
-    public:
-        int perimeter = 0;
-        int area = 0;
-        vector<int> homeCoords;
-
-        Region() {}
-        Region (int x, int y) {
-            homeCoords.push_back(x);
-            homeCoords.push_back(y);
-        }
-
-        string getCoords() {
-            return getCoordSting(homeCoords[0], homeCoords[1]);
-        }
-
-        void addArea(int a) {
-            area += a;
-        }
-
-        void addPerimeter(int p) {
-            perimeter += p;
-        }
-
-        void mergeRegions(Region r) {
-            perimeter += r.perimeter;
-            area += r.area;
-        }
-        int price () {
-            return area * perimeter;
-        }
-};
-
-void dayFive() {
+void dayTwelve() {
     vector<string> input = contentsOfInput();
     
     vector<vector<char>> regionMap;
@@ -62,90 +21,113 @@ void dayFive() {
         regionMap.push_back(temp);
     }
 
-    vector<vector<string>> homeCoords;
-    std::map<string, Region> regions;
-
-    // Prefill all of the homeCoord locations
-    std::fill(homeCoords.begin(), homeCoords.end(), vector<string>{});
-    for (int u = 0; u < homeCoords.size(); u++) {
-        std::fill(homeCoords[u].begin(), homeCoords[u].end(), "");
+    // Iterate over each coordinate, assign a perimeter value (if the area to the sides are different)
+    vector<vector<int>> perimeterMap;
+    for (int i = 0; i < regionMap.size(); i++) {
+        vector<int> tempLine;
+        for (int j = 0; j < regionMap[i].size(); j++) {
+            int tempPerimeter = 0;
+            tempPerimeter += (bool) (i == 0 || regionMap[i-1][j] != regionMap[i][j]);
+            tempPerimeter += (bool) (j == 0 || regionMap[i][j-1] != regionMap[i][j]);
+            tempPerimeter += (bool) (i == regionMap.size() - 1 || regionMap[i+1][j] != regionMap[i][j]);
+            tempPerimeter += (bool) (j == regionMap[i].size() - 1 || regionMap[i][j+1] != regionMap[i][j]);
+            tempLine.push_back(tempPerimeter);
+        }
+        perimeterMap.push_back(tempLine);
     }
 
+    std::map<string, int> regionAreas;
+    std::map<string, int> regionPerimeters;
+    std::map<string, int> regionSides;
+    std::map<string, char> regionChar;
+    std::map<string, string> coordinateRegionAssignments;
+
+    // Iterate over each coordinate, and check with coordinates to the upper or left side of the value
+    // If ONE of these values is the same as the current, then we add to that coordinates region
+    // If NONE of these values is the same as the current, we create a new region
+    // If BOTH of these values is the same as the current, we merge the two regions.
+
     for (int i = 0; i < regionMap.size(); i++) {
-        
         for (int j = 0; j < regionMap[i].size(); j++) {
-            // Coords are i,j
-            // Check each of the coords - runtime of O(n) given n is the number of spaces on the map
-            // Points above and to the left of the coord have already been recorded. Check these points, if they 
-            // have the same region char, then the current coord is part of that region.
-            // 
-            // Regions are based on their home coordinates, which is the first coordinate measured
-            // If the above and left are not the same region char, then start a new region with the current coords.
-            // If both above and left are part of the same region, but have different home coords, then merge the two.
-            
+            // Coord: i-j
+            bool up = (i > 0 && regionMap[i-1][j] == regionMap[i][j]);
+            bool left = (j > 0 && regionMap[i][j-1] == regionMap[i][j]);
 
-            // Three cases
-            bool isUpSame = (i > 0 && regionMap[i-1][j] == regionMap[i][j]);
-            bool isLeftSame = (j > 0 && regionMap[i][j-1] == regionMap[i][j]);
-
-            // If both are false
-            if (!isUpSame && !isLeftSame) {
-                Region rTemp = Region(i,j);
-                rTemp.addArea(1);
-                rTemp.addPerimeter(findPerimeter(i,j,regionMap));
-                regions.insert({getCoordSting(i,j), rTemp});
-
-                // Add to homeCoords
-                homeCoords[i][j] = rTemp.getCoords();
+            if (!up && !left) {
+                // Create
+                regionAreas.insert({coordStr(i,j), 1});
+                regionPerimeters.insert({coordStr(i,j), perimeterMap[i][j]});
+                // Sides is equal to the perimeter at this point
+                regionSides.insert({coordStr(i,j), perimeterMap[i][j]});
+                coordinateRegionAssignments.insert({coordStr(i,j), coordStr(i,j)});
+                regionChar.insert({coordStr(i,j), regionMap[i][j]});
+                continue;
             }
-
-            // If both are true
-            else if (isUpSame && isLeftSame) {
-                // Always prefer the left over the top (j over i)
-                if (homeCoords[i-1][j] != homeCoords[i][j-1]) {
-                    if (regions.count(homeCoords[i-1][j])) {
-                        regions[homeCoords[i][j-1]].mergeRegions(regions[homeCoords[i-1][j]]);
-                        regions.erase(homeCoords[i-1][j]);
+            else if (up && left) {
+                // Merge
+                if (coordinateRegionAssignments[coordStr(i-1,j)] != coordinateRegionAssignments[coordStr(i,j-1)]) {
+                    regionAreas[coordinateRegionAssignments[coordStr(i,j-1)]] += regionAreas[coordinateRegionAssignments[coordStr(i-1,j)]];
+                    regionAreas.erase(coordinateRegionAssignments[coordStr(i-1,j)]);
+                    regionPerimeters[coordinateRegionAssignments[coordStr(i,j-1)]] += regionPerimeters[coordinateRegionAssignments[coordStr(i-1,j)]];
+                    regionPerimeters.erase(coordinateRegionAssignments[coordStr(i-1,j)]);
+                    regionSides[coordinateRegionAssignments[coordStr(i,j-1)]] += regionSides[coordinateRegionAssignments[coordStr(i-1,j)]];
+                    regionSides.erase(coordinateRegionAssignments[coordStr(i-1,j)]);
+                    string toDelete = coordinateRegionAssignments[coordStr(i-1,j)];
+                    for (auto k : coordinateRegionAssignments) {
+                        if (k.second == toDelete) {
+                            coordinateRegionAssignments[k.first] = coordinateRegionAssignments[coordStr(i,j-1)];
+                        }
                     }
                 }
-                // If both have the same home, no need to merge, both should do the following
-                regions[homeCoords[i][j-1]].addArea(1);
-                regions[homeCoords[i][j-1]].addPerimeter(findPerimeter(i,j,regionMap));
-
-                // Add to homeCoords
-                homeCoords[i][j] = getCoordSting(i,j-1);
+            }
+            
+            // When merging, left is given priority, so left check, then up check...
+            if (left) {
+                regionAreas[coordinateRegionAssignments[coordStr(i,j-1)]] += 1;
+                regionPerimeters[coordinateRegionAssignments[coordStr(i,j-1)]] += perimeterMap[i][j];
+                coordinateRegionAssignments.insert({coordStr(i,j), coordinateRegionAssignments[coordStr(i,j-1)]});
+            }
+            else if (up) {
+                regionAreas[coordinateRegionAssignments[coordStr(i-1,j)]] += 1;
+                regionPerimeters[coordinateRegionAssignments[coordStr(i-1,j)]] += perimeterMap[i][j];
+                coordinateRegionAssignments.insert({coordStr(i,j), coordinateRegionAssignments[coordStr(i-1,j)]});
             }
 
-            else if (isUpSame && !isLeftSame) {
-                // This may mean the one above may be abandoned already, so this may mean creating a new region
-                if (!regions.count(homeCoords[i-1][j])) {
-                    Region rTemp = Region(i,j);
-                    rTemp.addArea(1);
-                    rTemp.addPerimeter(findPerimeter(i,j,regionMap));
-                    regions.insert({getCoordSting(i,j), rTemp});
-
-                    // Add to homeCoords
-                    homeCoords[i][j] = rTemp.getCoords();
+            int tSides = perimeterMap[i][j];
+            // For region sides, we have to check if left/right perimeters were already accounted for up, and up/down on the left
+            if (left) {
+                // Up
+                if (i == 0 || (regionMap[i][j] != regionMap[i-1][j] && regionMap[i][j-1] != regionMap[i-1][j-1])) {
+                    tSides -= 1;
                 }
-                else {
-                    regions[homeCoords[i-1][j]].addArea(1);
-                    regions[homeCoords[i-1][j]].addPerimeter(findPerimeter(i,j,regionMap));
+                // Down
+                if (i == regionMap.size() - 1 || (regionMap[i][j] != regionMap[i+1][j] && regionMap[i][j-1] != regionMap[i+1][j-1])) {
+                    tSides -= 1;
                 }
-                homeCoords[i][j] = getCoordSting(i-1,j);
             }
-            else if (!isUpSame && isLeftSame) {
-                regions[homeCoords[i][j-1]].addArea(1);
-                regions[homeCoords[i][j-1]].addPerimeter(findPerimeter(i,j,regionMap));
-                homeCoords[i][j] = getCoordSting(i,j-1);
+            if (up) {
+                // Left
+                if (j == 0 || (regionMap[i][j] != regionMap[i][j-1] && regionMap[i-1][j] != regionMap[i-1][j-1])) {
+                    tSides -= 1;
+                }
+                // Right
+                if (j == regionMap[i].size() - 1 || (regionMap[i][j] != regionMap[i][j+1] && regionMap[i-1][j] != regionMap[i-1][j+1])) {
+                    tSides -= 1;
+                }
             }
+            regionSides[coordinateRegionAssignments[coordStr(i,j)]] += tSides;
         }
     }
 
-
+    // Price:
     int price = 0;
-    for (auto l : regions) {
-        price += l.second.price();
+    int bulkDiscountPrice = 0;
+    for (auto k : regionAreas) {
+        price += regionAreas[k.first] * regionPerimeters[k.first];
+        bulkDiscountPrice += regionAreas[k.first] * regionSides[k.first];
+        // std::cout << regionChar[k.first] << " - Area: " << regionAreas[k.first] << ", Perimeter: " << regionPerimeters[k.first] << ", Sides: " << regionSides[k.first] << std::endl;
     }
 
-    std::cout << "Part 1: " << price << std::endl; 
+    std::cout << "Part 1: " << price << std::endl;
+    std::cout << "Part 2: " << bulkDiscountPrice << std::endl;
 }
