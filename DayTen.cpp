@@ -37,21 +37,19 @@ vector<vector<int>> recurseClimbTrail(int xPos, int yPos, vector<vector<int>> to
 
 }
 
-int intRecurseClimbTrail(int xPos, int yPos, vector<vector<int>> topoMap) {
+int findTrailRating(int xPos, int yPos, vector<vector<int>> topoMap) {
+    std::cout << xPos << ", " << yPos << std::endl;
     int a = topoMap[xPos][yPos];
-    vector<vector<int>> upList, rightList, leftList, downList;
-
     if (a == 9) {
         return 1;
-    }    
-    
-    rightList = (yPos < topoMap[xPos].size() - 1 && topoMap[xPos][yPos + 1] == a + 1) ? recurseClimbTrail(xPos, yPos + 1, topoMap) : vector<vector<int>>{};
-    downList = (xPos < topoMap.size() - 1 && topoMap[xPos + 1][yPos] == a + 1) ? recurseClimbTrail(xPos + 1, yPos, topoMap) : vector<vector<int>>{};
-    leftList = (yPos > 0 && topoMap[xPos][yPos - 1] == a + 1) ? recurseClimbTrail(xPos, yPos - 1, topoMap) : vector<vector<int>>{};
-    upList = (xPos > 0 && topoMap[xPos - 1][yPos] == a + 1) ? recurseClimbTrail(xPos - 1, yPos, topoMap) : vector<vector<int>>{};
+    }
 
-    return rightList.size() + downList.size() + leftList.size() + upList.size();
+    int rightRating = (yPos < topoMap[xPos].size() - 1 && topoMap[xPos][yPos + 1] == a + 1) ? findTrailRating(xPos, yPos + 1, topoMap) : 0;
+    int downRating = (xPos < topoMap.size() - 1 && topoMap[xPos + 1][yPos] == a + 1) ? findTrailRating(xPos + 1, yPos, topoMap) : 0;
+    int leftRating = (yPos > 0 && topoMap[xPos][yPos - 1] == a + 1) ? findTrailRating(xPos, yPos - 1, topoMap) : 0;
+    int upRating = (xPos > 0 && topoMap[xPos - 1][yPos] == a + 1) ? findTrailRating(xPos - 1, yPos, topoMap) : 0;
 
+    return rightRating + downRating + leftRating + upRating;
 }
 
 void dayTen() {
@@ -72,23 +70,26 @@ void dayTen() {
 
     for (int j = 0; j < tMap.size(); j++) {
         for (int k = 0; k < tMap[j].size(); k++) {
+                std::cout << "coord: " << j << ", " << k << std::endl;
             if (tMap[j][k] == 0) {
                 tempReturnList = recurseClimbTrail(j,k,tMap);
                 outputOne += tempReturnList.size();
+                std::cout << tempReturnList.size() << std::endl;
+                for (vector<int> a : tempReturnList) {
+                    std::cout << a[0] << ", " << a[1] << std::endl;
+                }
                 tempReturnList.clear();
             }
         }
     } 
 
     int outputTwo = 0;
-    int tempInt;
 
     for (int j = 0; j < tMap.size(); j++) {
         for (int k = 0; k < tMap[j].size(); k++) {
+                std::cout << "coord: " << j << ", " << k << std::endl;
             if (tMap[j][k] == 0) {
-                tempInt = intRecurseClimbTrail(j,k,tMap);
-                outputTwo += tempInt;
-                std::cout << tempInt << std::endl;
+                outputTwo += findTrailRating(j,k,tMap);
             }
         }
     } 
