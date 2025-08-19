@@ -41,7 +41,7 @@ class ClawMachine {
             if (gcd(xA, xB) % xPrize != 0 || gcd(yA, yB) % yPrize != 0) {
                 return 0;
             }
-            
+            return 0;
         }
 
 };
