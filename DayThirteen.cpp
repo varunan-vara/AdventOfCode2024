@@ -1,6 +1,5 @@
 #include "AoCFunctions.h"
 #include <iostream>
-#include <sstream>
 
 class ClawMachine {
     public:

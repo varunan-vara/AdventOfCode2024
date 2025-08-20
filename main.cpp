@@ -59,6 +59,9 @@ int main(int argc, const char * argv[]) {
         case 14:
             dayFourteen();
             break;
+        case 15:
+            dayFifteen();
+            break;
         default:
             NULL;
     }

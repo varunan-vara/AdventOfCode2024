@@ -16,5 +16,6 @@ void dayEleven();
 void dayTwelve();
 void dayThirteen();
 void dayFourteen();
+void dayFifteen();
 
 #endif // ADVENT_OF_CODE_SOLUTIONS

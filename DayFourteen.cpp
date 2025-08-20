@@ -1,6 +1,5 @@
 #include "AoCFunctions.h"
 #include <iostream>
-#include <sstream>
 
 int FLOOR_WIDTH = 101;
 int FLOOR_HEIGHT = 103;
